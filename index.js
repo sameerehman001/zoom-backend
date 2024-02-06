@@ -6,22 +6,10 @@ const cors = require('cors')
 const KJUR = require('jsrsasign')
 
 const app = express()
-const port = process.env.PORT || 4000
+const port = 8000
 
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
-const corsOptions = [
-  cors({
-    origin:"*",
-    methods:"*"
-  })
-];
-app.use(bodyParser.json());
-// app.use(corsOptions());
-app.use(function(req,res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-  next();
-});
+app.use(bodyParser.json(), cors())
+app.options('*', cors())
 
 app.post('/', (req, res) => {
 
