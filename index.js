@@ -9,17 +9,14 @@ const app = express()
 const port = process.env.PORT || 4000
 
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-};
+const corsOptions = [
+  cors({
+    origin:"*",
+    methods:"*"
+  })
+];
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+app.use(corsOptions());
 
 app.post('/', (req, res) => {
 
