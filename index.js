@@ -8,8 +8,18 @@ const KJUR = require('jsrsasign')
 const app = express()
 const port = process.env.PORT || 4000
 
-app.use(bodyParser.json(), cors())
-app.options('*', cors())
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+app.use(bodyParser.json());
+app.use(cors(corsOptions));
 
 app.post('/', (req, res) => {
 
